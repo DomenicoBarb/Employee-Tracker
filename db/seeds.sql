@@ -5,14 +5,14 @@ INSERT INTO department (name) VALUES
     ('Finance'),
     ('Legal');
 
--- Insert data into role table
+-- Insert data into the role table
 INSERT INTO role (title, department, salary) VALUES
     ('Software Engineer', 'Engineering', 90000),
     ('Salesperson', 'Sales', 65000),
     ('Accountant', 'Finance', 110000),
     ('Lawyer', 'Legal', 200000);
 
--- Insert data into employee table
+-- Insert data into the employee table
 INSERT INTO employee (first_name, last_name, title, department, salary, manager) VALUES
     ('Nico', 'Barberi', 'Software Engineer', 'Engineering', 90000, NULL),
     ('Jony', 'Ive', 'Salesperson', 'Sales', 65000, NULL),
