@@ -1,3 +1,4 @@
-// Variable declaration/dependencies
+// Variable Definitions & Dependencies
 const inquirer = require('inquirer');
-const database = require('./config/connection.js');
+const database = require('./config/connection');
+
