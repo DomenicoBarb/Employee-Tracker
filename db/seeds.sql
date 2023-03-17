@@ -1,26 +1,24 @@
--- Inserts names of departments into department table
-INSERT INTO department
-  (name)
-VALUES
-  ('Engineering'),
-  ('Sales'),
-  ('Finance'),
-  ('Legal');
+-- Insert data into department table
+INSERT INTO department (name) VALUES
+    ('Engineering'),
+    ('Sales'),
+    ('Finance'),
+    ('Legal');
 
--- Inserts roles of employee into role table
-INSERT INTO role
-  (title, salary, department_id)
-VALUES
-  ('Software Engineer', 90000, 1),
-  ('Salesperson', 65000, 2),
-  ('Accountant', 110000, 3),
-  ('Lawyer', 200000, 4);
+-- Insert data into role table
+INSERT INTO role (title, department, salary) VALUES
+    ('Software Engineer', 'Engineering', 90000),
+    ('Salesperson', 'Sales', 65000),
+    ('Accountant', 'Finance', 110000),
+    ('Lawyer', 'Legal', 200000);
 
--- Inserts employee information into employee table
-INSERT INTO employee
-  (first_name, last_name, role_id, manager_id)
-VALUES
-  ('Nico', 'Barberi', 1, 1),
-  ('Jony', 'Ive', 2, 2),
-  ('J.P', 'Morgan', 3, 3),
-  ('Abraham', 'Lincoln', 4, 4);
+-- Insert data into employee table
+INSERT INTO employee (first_name, last_name, title, department, salary, manager) VALUES
+    ('Nico', 'Barberi', 'Software Engineer', 'Engineering', 90000, NULL),
+    ('Jony', 'Ive', 'Salesperson', 'Sales', 65000, NULL),
+    ('J.P', 'Morgan', 'Accountant', 'Finance', 110000, NULL),
+    ('Abraham', 'Lincoln', 'Lawyer', 'Legal', 200000, NULL),
+    ('Alice', 'Smith', 'Software Engineer', 'Engineering', 90000, 'Nico Barberi'),
+    ('Bob', 'Jones', 'Salesperson', 'Sales', 65000, 'Jony Ive'),
+    ('Charlie', 'Brown', 'Accountant', 'Finance', 110000, 'J.P Morgan'),
+    ('David', 'Lee', 'Lawyer', 'Legal', 200000, 'Abraham Lincoln');

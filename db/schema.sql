@@ -2,22 +2,25 @@ DROP DATABASE IF EXISTS employee_tracker_db;
 CREATE DATABASE employee_tracker_db;
 USE employee_tracker_db;
 
+-- Create department table
 CREATE TABLE department (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(30)
+    name VARCHAR(30) PRIMARY KEY
 );
 
+-- Create role table
 CREATE TABLE role (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(30),
-    salary DECIMAL,
-    department_id INTEGER
+    title VARCHAR(30) PRIMARY KEY,
+    department VARCHAR(30),
+    salary DECIMAL
 );
 
+-- Create employee table
 CREATE TABLE employee (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    role_id INTEGER,
-    manager_id INTEGER
+    title VARCHAR(30),
+    department VARCHAR(30),
+    salary DECIMAL,
+    manager VARCHAR(30)
 );
