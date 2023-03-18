@@ -355,7 +355,7 @@ var employee_tracker = function () {
                         }
                     }
 
-                    database.query(`UPDATE employee SET title = ?, department = ?, salary = ?, manager = ? WHERE first_name = ? AND last_name = ?`, [{title: newTitle}, {department: newDepartment}, {salary: newSalary}, {manager: newManager}, {first_name: firstName}, {last_name: lastName}], (err, result) => {
+                    database.query(`UPDATE employee SET title = ?, department = ?, salary = ?, manager = ? WHERE first_name = ? AND last_name = ?`, [newTitle,newDepartment,newSalary,newManager,firstName,lastName], (err, result) => {
                         if (err) throw err;
                         console.log(`Updated ${answers.employee}'s role to ${answers.title} in the ${answers.department} department with their new manager ${answers.manager} with a new salary of $${answers.salary}.`);
                         employee_tracker();
