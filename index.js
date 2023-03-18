@@ -244,7 +244,7 @@ var employee_tracker = function () {
             });
         } else if (answers.prompt === 'Update An Employee Role') {
             // Calling the database to acquire the roles and managers
-            database.query(`SELECT * FROM employee, role`, (err, result) => {
+            database.query(`SELECT * FROM employee`, (err, result) => {
                 if (err) throw err;
 
                 inquirer.prompt([
@@ -344,7 +344,7 @@ var employee_tracker = function () {
                     }
 
                     for (var i = 0; i < result.length; i++) {
-                        if (result[i].department === answers.salary) {
+                        if (result[i].salary === answers.salary) {
                             var newSalary = result[i].salary;
                         }
                     }
