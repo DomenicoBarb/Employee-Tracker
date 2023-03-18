@@ -322,36 +322,36 @@ var employee_tracker = function () {
                     // Comparing the result and storing it into the variable
                     for (var i = 0; i < result.length; i++) {
                         if (result[i].first_name === answers.employee) {
-                            var firstName = result[i].first_name.toString();
+                            var firstName = result[i].first_name;
                         }
                     }
                     for (var i = 0; i < result.length; i++) {
                         if (result[i].last_name === answers.employee) {
-                            var lastName = result[i].last_name.toString();
+                            var lastName = result[i].last_name;
                         }
                     }
 
                     for (var i = 0; i < result.length; i++) {
                         if (result[i].title === answers.title) {
-                            var newTitle = result[i].title.toString();
+                            var newTitle = result[i].title;
                         }
                     }
 
                     for (var i = 0; i < result.length; i++) {
                         if (result[i].department === answers.department) {
-                            var newDepartment = result[i].department.toString();
+                            var newDepartment = result[i].department;
                         }
                     }
 
                     for (var i = 0; i < result.length; i++) {
                         if (result[i].department === answers.salary) {
-                            var newSalary = parseFloat(result[i].salary);
+                            var newSalary = result[i].salary;
                         }
                     }
 
                     for (var i = 0; i < result.length; i++) {
                         if (result[i].manager === answers.manager) {
-                            var newManager = result[i].toString();
+                            var newManager = result[i];
                         }
                     }
 
