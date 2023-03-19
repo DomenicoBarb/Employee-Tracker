@@ -1,7 +1,7 @@
 # <span style="color:green">Employee-Tracker</span>
 
 ## Description:
-A command-line application to manage a company's employee database, using Node.js, Inquirer, and MySQL.
+A command-line application to manage a company's employee database, using Node.js, Inquirer, MySQL and console.table/Chalk for styling.
 
 ## Table of Contents:
 
