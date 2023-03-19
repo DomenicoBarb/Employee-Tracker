@@ -32,7 +32,7 @@ var employee_tracker = function () {
         type: 'list',
         name: 'prompt',
         message: chalk.whiteBright('What would you like to do?' + '\n'),
-        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'Delete An Employee', 'Delete A Department', 'Log Out']
+        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'Delete An Employee', 'Delete A Department', 'Delete A Role', 'Log Out']
     }]).then((answers) => {
         // Views the Department Table in the Database
         if (answers.prompt === 'View All Departments') {
@@ -361,6 +361,30 @@ var employee_tracker = function () {
                     database.query('DELETE FROM department WHERE name = ?', [departmentName], (err, result) => {
                         if (err) throw err;
                         console.log(`Deleted department '${departmentName}'`);
+                        employee_tracker();
+                    });
+                });
+            });
+        } else if (answers.prompt === 'Delete A Role') {
+            database.query('SELECT * FROM role', (err, result) => {
+                if (err) throw err;
+                inquirer.prompt([
+                    {
+                        type: 'list',
+                        name: 'role',
+                        message: 'Which role would you like to delete?',
+                        choices: () => {
+                            const roleTitles = result.map(row => row.title);
+                            return roleTitles;
+                        }
+                    }
+                ]).then((answer) => {
+                    const roleTitle = answer.role;
+                    const role = result.find(row => row.title === roleTitle);
+                    const values = [roleTitle];
+                    database.query('DELETE FROM role WHERE title = ?', values, (err, result) => {
+                        if (err) throw err;
+                        console.log(`Deleted role ${roleTitle}`);
                         employee_tracker();
                     });
                 });
