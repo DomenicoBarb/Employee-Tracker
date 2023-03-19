@@ -19,7 +19,7 @@ Type "npm i" into your terminal.
 
 ## Usage:
 
-Type "node index.js" to run the application.
+Type "node index" or "node index.js" to run the application.
 
 ## Screenshot:
 ![Screenshot of Application](./assets/images/screenshot.png)
