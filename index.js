@@ -1,6 +1,7 @@
 // Variable Definitions & Dependencies
 const inquirer = require('inquirer');
 const database = require('./config/connection');
+const table = require('console.table');
 
 // Start server after DataBase connection
 database.connect(err => {
