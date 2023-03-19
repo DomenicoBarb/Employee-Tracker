@@ -7,11 +7,11 @@ const chalk = require('chalk');
 // Start server after DataBase connection
 database.connect(err => {
     if (err) throw err;
-    console.log('Database connected.');
+    console.log(chalk.greenBright('            Database connected!\n'));
     employee_tracker();
 });
 
-console.log(chalk.red(`
+console.log(chalk.redBright(`
  _________________________________________                              
 |    _____           _                    |
 |   |   __|_____ ___| |___ _ _ ___ ___    |
@@ -31,7 +31,7 @@ var employee_tracker = function () {
         // Begin Command Line
         type: 'list',
         name: 'prompt',
-        message: 'What would you like to do?',
+        message: chalk.whiteBright('What would you like to do?' + '\n'),
         choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'Log Out']
     }]).then((answers) => {
         // Views the Department Table in the Database
@@ -246,7 +246,7 @@ var employee_tracker = function () {
             });
         } else if (answers.prompt === 'Update An Employee Role') {
             // Calling the database to acquire the roles and managers
-            database.query(`SELECT * FROM employee`, (err, result) => {
+            database.query('SELECT * FROM employee', (err, result) => {
                 if (err) throw err;
 
                 inquirer.prompt([
@@ -254,14 +254,10 @@ var employee_tracker = function () {
                         // Choose an Employee to Update
                         type: 'list',
                         name: 'employee',
-                        message: 'Which employees role do you want to update?',
+                        message: 'Which employee\'s role do you want to update?',
                         choices: () => {
-                            var array = [];
-                            for (var i = 0; i < result.length; i++) {
-                                array.push(result[i].first_name + ' ' + result[i].last_name);
-                            }
-                            var newArray = [...new Set(array)];
-                            return newArray;
+                            const uniqueEmployees = [...new Set(result.map(row => `${row.first_name} ${row.last_name}`))];
+                            return uniqueEmployees;
                         }
                     },
                     {
@@ -270,100 +266,56 @@ var employee_tracker = function () {
                         name: 'title',
                         message: 'What is their new role?',
                         choices: () => {
-                            var array = [];
-                            for (var i = 0; i < result.length; i++) {
-                                array.push(result[i].title);
-                            }
-                            var newArray = [...new Set(array)];
-                            return newArray;
+                            const uniqueTitles = [...new Set(result.map(row => row.title))];
+                            return uniqueTitles;
                         }
                     },
                     {
                         // Updating the New Department
                         type: 'list',
-                        name: 'department', // change the name to 'department'
+                        name: 'department',
                         message: 'What is their new department?',
                         choices: () => {
-                            var array = [];
-                            for (var i = 0; i < result.length; i++) {
-                                array.push(result[i].department);
-                            }
-                            var newArray = [...new Set(array)];
-                            return newArray;
+                            const uniqueDepartments = [...new Set(result.map(row => row.department))];
+                            return uniqueDepartments;
                         }
                     },
                     {
                         // Adding Employee Salary
                         type: 'input',
                         name: 'salary',
-                        default: '',
                         message: 'What is the employee\'s new salary?',
                         validate: salaryInput => {
-                            var valid = !isNaN(parseFloat(salaryInput));
-                            return valid || 'Please enter a number';
+                            const isValid = !isNaN(parseFloat(salaryInput));
+                            return isValid || 'Please enter a number';
                         }
-                    },                                          
+                    },
                     {
                         // Adding Employee Manager
                         type: 'list',
                         name: 'manager',
-                        message: 'Who is the employees new manager?',
+                        message: 'Who is the employee\'s new manager?',
                         choices: () => {
-                            var array = [];
-                            for (var i = 0; i < result.length; i++) {
-                                array.push(result[i].first_name + ' ' + result[i].last_name);
-                            }
-                            var newArray = [...new Set(array)];
-                            return newArray;
+                            const uniqueManagers = [...new Set(result.map(row => `${row.first_name} ${row.last_name}`))];
+                            return uniqueManagers;
                         }
                     }
                 ]).then((answers) => {
                     // Comparing the result and storing it into the variable
-                    for (var i = 0; i < result.length; i++) {
-                        if (result[i].first_name === answers.employee) {
-                            var firstName = result[i].first_name;
-                        }
-                    }
-                    for (var i = 0; i < result.length; i++) {
-                        if (result[i].last_name === answers.employee) {
-                            var lastName = result[i].last_name;
-                        }
-                    }
+                    const employee = result.find(row => `${row.first_name} ${row.last_name}` === answers.employee);
+                    const { title, department, salary, manager } = answers;
+                    const values = [title, department, salary, manager, employee.first_name, employee.last_name];
 
-                    for (var i = 0; i < result.length; i++) {
-                        if (result[i].title === answers.title) {
-                            var newTitle = result[i].title;
-                        }
-                    }
-
-                    for (var i = 0; i < result.length; i++) {
-                        if (result[i].department === answers.department) {
-                            var newDepartment = result[i].department;
-                        }
-                    }
-
-                    for (var i = 0; i < result.length; i++) {
-                        if (result[i].salary === answers.salary) {
-                            var newSalary = result[i].salary;
-                        }
-                    }
-
-                    for (var i = 0; i < result.length; i++) {
-                        if (result[i].manager === answers.manager) {
-                            var newManager = result[i];
-                        }
-                    }
-
-                    database.query(`UPDATE employee SET title = ?, department = ?, salary = ?, manager = ? WHERE first_name = ? AND last_name = ?`, [answers.title, answers.department, answers.salary, answers.manager, firstName, lastName], (err, result) => {
+                    database.query('UPDATE employee SET title = ?, department = ?, salary = ?, manager = ? WHERE first_name = ? AND last_name = ?', values, (err, result) => {
                         if (err) throw err;
-                        console.log(`Updated ${answers.employee}'s role to ${answers.title} in the ${answers.department} department with their new manager ${answers.manager} and a new salary of $${answers.salary}.`);
+                        console.log(`Updated ${employee.first_name} ${employee.last_name}'s role to ${title} in the ${department} department with their new manager ${manager} and a new salary of $${salary}.`);
                         employee_tracker();
                     });
-                })
+                });
             });
         } else if (answers.prompt === 'Log Out') {
             database.end();
-            console.log("Good-Bye!");
+            console.log(chalk.redBright("Have a good day! :)"));
         }
     })
 };
