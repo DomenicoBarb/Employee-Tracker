@@ -2,6 +2,7 @@
 const inquirer = require('inquirer');
 const database = require('./config/connection');
 const table = require('console.table');
+const chalk = require('chalk');
 
 // Start server after DataBase connection
 database.connect(err => {
@@ -10,7 +11,7 @@ database.connect(err => {
     employee_tracker();
 });
 
-console.log(`
+console.log(chalk.red(`
  _________________________________________                              
 |    _____           _                    |
 |   |   __|_____ ___| |___ _ _ ___ ___    |
@@ -24,7 +25,7 @@ console.log(`
 |   |_|_|_|__,|_|_|__,|_  |___|_|         |
 |                     |___|               |
 |_________________________________________|
-`);
+`));
 var employee_tracker = function () {
     inquirer.prompt([{
         // Begin Command Line
