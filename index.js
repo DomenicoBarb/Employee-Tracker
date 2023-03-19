@@ -32,7 +32,7 @@ var employee_tracker = function () {
         type: 'list',
         name: 'prompt',
         message: chalk.whiteBright('What would you like to do?' + '\n'),
-        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'Delete An Employee', 'Log Out']
+        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'Delete An Employee', 'Delete A Department', 'Log Out']
     }]).then((answers) => {
         // Views the Department Table in the Database
         if (answers.prompt === 'View All Departments') {
@@ -317,7 +317,7 @@ var employee_tracker = function () {
             // Calling the database to acquire the list of employees
             database.query('SELECT * FROM employee', (err, result) => {
                 if (err) throw err;
-        
+
                 inquirer.prompt([
                     {
                         // Choose an Employee to Delete
@@ -333,10 +333,34 @@ var employee_tracker = function () {
                     // Comparing the result and storing it into the variable
                     const employee = result.find(row => `${row.first_name} ${row.last_name}` === answers.employee);
                     const { first_name, last_name } = employee;
-        
+
                     database.query('DELETE FROM employee WHERE first_name = ? AND last_name = ?', [first_name, last_name], (err, result) => {
                         if (err) throw err;
                         console.log(chalk.redBright(`Deleted ${first_name} ${last_name} from the database!`));
+                        employee_tracker();
+                    });
+                });
+            });
+        } else if (answers.prompt === 'Delete A Department') {
+            database.query('SELECT * FROM department', (err, result) => {
+                if (err) throw err;
+                inquirer.prompt([
+                    {
+                        type: 'list',
+                        name: 'department',
+                        message: 'Which department would you like to delete?',
+                        choices: () => {
+                            const departmentNames = result.map(row => row.name);
+                            return departmentNames;
+                        }
+                    }
+                ]).then((answer) => {
+                    const departmentName = answer.department;
+                    const department = result.find(row => row.name === departmentName);
+                    const id = department.id;
+                    database.query('DELETE FROM department WHERE name = ?', [departmentName], (err, result) => {
+                        if (err) throw err;
+                        console.log(`Deleted department '${departmentName}'`);
                         employee_tracker();
                     });
                 });
