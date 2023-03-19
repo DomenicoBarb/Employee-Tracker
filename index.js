@@ -32,27 +32,27 @@ var employee_tracker = function () {
         type: 'list',
         name: 'prompt',
         message: chalk.whiteBright('What would you like to do?' + '\n'),
-        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'Log Out']
+        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'Delete An Employee', 'Log Out']
     }]).then((answers) => {
         // Views the Department Table in the Database
         if (answers.prompt === 'View All Departments') {
             database.query(`SELECT * FROM department`, (err, result) => {
                 if (err) throw err;
-                console.log("Viewing All Departments: ");
+                console.log("Viewing All Departments:\n");
                 console.table(result);
                 employee_tracker();
             });
         } else if (answers.prompt === 'View All Roles') {
             database.query(`SELECT * FROM role`, (err, result) => {
                 if (err) throw err;
-                console.log("Viewing All Roles: ");
+                console.log("Viewing All Roles:\n");
                 console.table(result);
                 employee_tracker();
             });
         } else if (answers.prompt === 'View All Employees') {
             database.query(`SELECT * FROM employee`, (err, result) => {
                 if (err) throw err;
-                console.log("Viewing All Employees: ");
+                console.log("Viewing All Employees:\n");
                 console.table(result);
                 employee_tracker();
             });
@@ -309,6 +309,34 @@ var employee_tracker = function () {
                     database.query('UPDATE employee SET title = ?, department = ?, salary = ?, manager = ? WHERE first_name = ? AND last_name = ?', values, (err, result) => {
                         if (err) throw err;
                         console.log(`Updated ${employee.first_name} ${employee.last_name}'s role to ${title} in the ${department} department with their new manager ${manager} and a new salary of $${salary}.`);
+                        employee_tracker();
+                    });
+                });
+            });
+        } else if (answers.prompt === 'Delete An Employee') {
+            // Calling the database to acquire the list of employees
+            database.query('SELECT * FROM employee', (err, result) => {
+                if (err) throw err;
+        
+                inquirer.prompt([
+                    {
+                        // Choose an Employee to Delete
+                        type: 'list',
+                        name: 'employee',
+                        message: 'Which employee do you want to delete?',
+                        choices: () => {
+                            const uniqueEmployees = [...new Set(result.map(row => `${row.first_name} ${row.last_name}`))];
+                            return uniqueEmployees;
+                        }
+                    }
+                ]).then((answers) => {
+                    // Comparing the result and storing it into the variable
+                    const employee = result.find(row => `${row.first_name} ${row.last_name}` === answers.employee);
+                    const { first_name, last_name } = employee;
+        
+                    database.query('DELETE FROM employee WHERE first_name = ? AND last_name = ?', [first_name, last_name], (err, result) => {
+                        if (err) throw err;
+                        console.log(chalk.redBright(`Deleted ${first_name} ${last_name} from the database!`));
                         employee_tracker();
                     });
                 });
