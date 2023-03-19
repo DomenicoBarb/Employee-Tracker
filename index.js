@@ -292,18 +292,15 @@ var employee_tracker = function () {
                     },
                     {
                         // Adding Employee Salary
-                        type: 'number',
+                        type: 'input',
                         name: 'salary',
-                        message: 'What is the employees new salary?',
+                        default: '',
+                        message: 'What is the employee\'s new salary?',
                         validate: salaryInput => {
-                          if (salaryInput && /^\d+(\.\d+)?$/.test(salaryInput)) {
-                            return true;
-                          } else {
-                            console.log('Please Enter a Valid Decimal Number for the Salary!');
-                            return false;
-                          }
+                            var valid = !isNaN(parseFloat(salaryInput));
+                            return valid || 'Please enter a number';
                         }
-                      },
+                    },                                          
                     {
                         // Adding Employee Manager
                         type: 'list',
