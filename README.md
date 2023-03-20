@@ -7,6 +7,8 @@ A command-line application to manage a company's employee database, using Node.j
 
 * [Installation](#installation)
 * [Usage](#usage)
+* [Screenshot](#screenshot)
+* [Demo](#demo)
 * [License](#license)
 * [Questions](#Questions)
 * [Email](#Email)
@@ -23,6 +25,9 @@ Type "node index" or "node index.js" to run the application.
 
 ## Screenshot:
 ![Screenshot of Application](./assets/images/screenshot.png)
+
+## Demo:
+https://user-images.githubusercontent.com/119437696/226221915-84049a97-c88c-425c-95f4-b744439bb641.mp4
 
 ## License
 
