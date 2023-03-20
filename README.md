@@ -21,6 +21,7 @@ Type "npm i" into your terminal.
 
 ## Usage:
 
+Type "mysql -u root -p" (if you have a password, it not drop the -p) within the "db" folder and then type "source ./schema.sql" then "source ./seeds.sql" to create a database.
 Type "node index" or "node index.js" to run the application.
 
 ## Screenshot:
