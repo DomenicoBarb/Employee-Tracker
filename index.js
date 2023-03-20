@@ -32,7 +32,7 @@ var employee_tracker = function () {
         type: 'list',
         name: 'prompt',
         message: chalk.whiteBright('What would you like to do?' + '\n'),
-        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'Delete An Employee', 'Delete A Department', 'Delete A Role', 'Log Out']
+        choices: ['View All Employees', 'View All Departments', 'View All Roles', 'Add An Employee', 'Add A Department', 'Add A Role', 'Update An Employee (Role, Department, Salary and Manager)', 'Delete An Employee', 'Delete A Department', 'Delete A Role', 'Log Out']
     }]).then((answers) => {
         // Views the Department Table in the Database
         if (answers.prompt === 'View All Departments') {
@@ -244,7 +244,7 @@ var employee_tracker = function () {
                     });
                 })
             });
-        } else if (answers.prompt === 'Update An Employee Role') {
+        } else if (answers.prompt === 'Update An Employee (Role, Department, Salary and Manager)') {
             // Calling the database to acquire the roles and managers
             database.query('SELECT * FROM employee', (err, result) => {
                 if (err) throw err;
