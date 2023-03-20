@@ -15,10 +15,10 @@ INSERT INTO role (title, department, salary) VALUES
 -- Insert data into the employee table
 INSERT INTO employee (id, first_name, last_name, title, department, salary, manager) VALUES
     (1, 'Nico', 'Barberi', 'Software Engineer', 'Engineering', 90000, NULL),
-    (2, 'Jony', 'Ive', 'Salesperson', 'Sales', 75000, NULL),
-    (3, 'J.P', 'Morgan', 'Accountant', 'Finance', 110000, NULL),
-    (4, 'Abraham', 'Lincoln', 'Lawyer', 'Legal', 200000, NULL),
-    (5, 'Alice', 'Smith', 'Software Engineer', 'Engineering', 65000, 'Nico Barberi'),
-    (6, 'Bob', 'Jones', 'Salesperson', 'Sales', 55000, 'Jony Ive'),
-    (7, 'Charlie', 'Brown', 'Accountant', 'Finance', 90000, 'J.P Morgan'),
+    (2, 'Alice', 'Smith', 'Software Engineer', 'Engineering', 65000, 'Nico Barberi'),
+    (3, 'Jony', 'Ive', 'Salesperson', 'Sales', 75000, NULL),
+    (4, 'Bob', 'Jones', 'Salesperson', 'Sales', 55000, 'Jony Ive'),
+    (5, 'J.P', 'Morgan', 'Accountant', 'Finance', 110000, NULL),
+    (6, 'Charlie', 'Brown', 'Accountant', 'Finance', 90000, 'J.P Morgan'),
+    (7, 'Abraham', 'Lincoln', 'Lawyer', 'Legal', 200000, NULL),
     (8, 'David', 'Lee', 'Lawyer', 'Legal', 100000, 'Abraham Lincoln');
